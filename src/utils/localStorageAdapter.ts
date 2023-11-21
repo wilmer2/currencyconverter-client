@@ -2,10 +2,10 @@ export const setItem = (key: string, value: string): void => {
 	localStorage.setItem(key, value);
 };
 
-export const getItem = (key: string): unknown | null => {
+export const getItem = <T>(key: string): null | T => {
 	const value = localStorage.getItem(key);
 
-	return value ? JSON.parse(value) : null;
+	return value ? (JSON.parse(value) as T) : null;
 };
 
 export const removeItem = (key: string): void => {

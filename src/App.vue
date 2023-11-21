@@ -2,9 +2,10 @@
 import Header from './components/Header.vue';
 import Container from './components/Container.vue';
 import { onMounted } from 'vue';
+import { generateTrackGuestUserHeader } from './services/headerService';
 
 onMounted(() => {
-	console.log('*** load app ***');
+	generateTrackGuestUserHeader();
 });
 </script>
 

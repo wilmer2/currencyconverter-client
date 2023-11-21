@@ -8,6 +8,8 @@ import ErrorMessageVue from '@/components/ErrorMessage.vue';
 import { onMounted } from 'vue';
 import { useCurrenyStore } from '@/stores/currency-store';
 import { useConvertStore } from '@/stores/convert-store';
+import { type ConversionQueryData } from '@/interfaces/conversion.interface';
+import headerService from '@/services/headerService';
 
 const currencyStore = useCurrenyStore();
 const convertStore = useConvertStore();
@@ -16,6 +18,14 @@ const fetchCurrencies = (): void => {
 	if (!currencyStore.currencyList) {
 		currencyStore.fetchCurrencies();
 	}
+};
+
+const handleConversion = (params: ConversionQueryData) => {
+	const customHeaders = headerService.getTrackGuestHeader();
+
+	if (!customHeaders) return;
+
+	convertStore.fetchConversionWithHeaders(params, customHeaders);
 };
 
 onMounted(fetchCurrencies);
@@ -39,11 +49,14 @@ onMounted(fetchCurrencies);
 		v-if="currencyStore.currencyList"
 		class="bg-white rounded-lg shadow-md p-6 mx-auto max-w-screen-lg mt-4"
 	>
+		<div class="mb-5" v-if="convertStore.conversion">
+			<CurrencyChangeInfo :conversion="convertStore.conversion" />
+		</div>
 		<CurrencyChangeForm
-			@onSubmit="convertStore.fetchCurrencyConversion"
+			@onSubmit="handleConversion"
 			:currencyCountryPairs="currencyStore.currencyCountryPairs"
 		>
-			<div class="md:mt-2 md:mb-2">
+			<div class="mt-5 md:mt-2 md:mb-2">
 				<button
 					type="submit"
 					class="bg-blue-500 text-white px-4 py-2 flex items-center justify-between space-x-2 rounded-md"
@@ -62,6 +75,5 @@ onMounted(fetchCurrencies);
 				</button>
 			</div>
 		</CurrencyChangeForm>
-		<CurrencyChangeInfo />
 	</div>
 </template>

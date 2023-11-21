@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
 
-const instance = axios.create({
+const axiosObj = axios.create({
 	baseURL: import.meta.env.VITE_APP_BASE_API_URL,
 	headers: {
 		'Content-Type': 'application/json',
@@ -8,18 +8,21 @@ const instance = axios.create({
 });
 
 export const get = <T>(url: string, params = {}): Promise<AxiosResponse<T>> => {
-	return instance.get<T>(url, { params });
+	return axiosObj.get<T>(url, { params });
 };
 
-export const customHeaderRequest = (url: string, customHeaderValue: string) => {
-	return instance.get(url, {
-		headers: {
-			'X-Custom-Header': customHeaderValue,
-		},
+export const getWithCustomHeaders = (
+	url: string,
+	params = {},
+	headers = {}
+) => {
+	return axiosObj.get(url, {
+		params,
+		headers,
 	});
 };
 
 export default {
 	get,
-	customHeaderRequest,
+	getWithCustomHeaders,
 };

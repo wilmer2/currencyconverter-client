@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import {
-	type CurrencyCountryPair,
-	type CurrencyConversionData,
-} from '@/interfaces/currency.interface';
+import { type CurrencyCountryPair } from '@/interfaces/currency.interface';
+import { type ConversionQueryData } from '@/interfaces/conversion.interface';
 import { reactive } from 'vue';
 
 const props = defineProps<{
@@ -10,7 +8,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(e: 'onSubmit', data: CurrencyConversionData): void;
+	(e: 'onSubmit', data: ConversionQueryData): void;
 }>();
 
 const fields = reactive({

@@ -1,22 +1,29 @@
 import { defineStore } from 'pinia';
-import { fetchCurrencyConversion } from '../services/currencyService';
-import { type CurrencyConversionData } from '../interfaces/currency.interface';
+import { fetchConversionWithHeaders } from '../services/currencyService';
+import {
+	type ConversionQueryData,
+	type Conversion,
+} from '@/interfaces/conversion.interface';
+import { type StringKeyObject } from '../interfaces/generics.interface';
 
 export const useConvertStore = defineStore('convert', {
 	state: () => {
 		return {
-			result: null as null | unknown,
+			conversion: null as null | Conversion,
 			loading: false,
 			error: null as null | string,
 		};
 	},
 	actions: {
-		async fetchCurrencyConversion(params: CurrencyConversionData) {
+		async fetchConversionWithHeaders(
+			params: ConversionQueryData,
+			headers: StringKeyObject
+		) {
 			this.loading = true;
 			this.error = null;
 
 			try {
-				this.result = await fetchCurrencyConversion(params);
+				this.conversion = await fetchConversionWithHeaders(params, headers);
 			} catch (e: any) {
 				this.error = e.response.data.detail;
 			} finally {
