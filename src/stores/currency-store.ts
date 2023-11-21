@@ -10,6 +10,7 @@ export const useCurrenyStore = defineStore('currency', {
 		return {
 			currencyList: null as Currency | null,
 			loading: true,
+			error: null as null | unknown,
 		};
 	},
 	getters: {
@@ -27,14 +28,19 @@ export const useCurrenyStore = defineStore('currency', {
 	actions: {
 		async fetchCurrencies() {
 			this.loading = true;
+			this.error = null;
 
 			try {
 				this.currencyList = await fetchCurrencies();
 			} catch (e) {
-				throw e;
+				this.error = e;
 			} finally {
 				this.loading = false;
 			}
+		},
+
+		clearError() {
+			this.error = null;
 		},
 	},
 });

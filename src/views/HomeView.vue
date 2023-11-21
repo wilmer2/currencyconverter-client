@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import CurrencyChangeForm from '@/components/CurrencyChangeForm.vue';
 import CurrencyChangeInfo from '@/components/CurrencyChangeInfo.vue';
+import BtnReload from '@/components/BtnReload.vue';
+
 import Spinner from '@/components/Spinner.vue';
 import ErrorMessageVue from '@/components/ErrorMessage.vue';
 import { onMounted } from 'vue';
@@ -25,6 +27,12 @@ onMounted(fetchCurrencies);
 		:message="convertStore.error"
 		@onClose="convertStore.clearError"
 	/>
+
+	<BtnReload
+		v-if="currencyStore.error"
+		@onReload="currencyStore.fetchCurrencies"
+	/>
+
 	<Spinner v-if="currencyStore.loading" />
 
 	<div
