@@ -4,6 +4,7 @@ import CurrencyChangeInfo from '@/components/CurrencyChangeInfo.vue';
 import BtnReload from '@/components/BtnReload.vue';
 
 import Spinner from '@/components/Spinner.vue';
+import BtnLoading from '@/components/BtnLoading.vue';
 import ErrorMessageVue from '@/components/ErrorMessage.vue';
 import { onMounted } from 'vue';
 import { useCurrenyStore } from '@/stores/currency-store';
@@ -23,7 +24,7 @@ const fetchCurrencies = (): void => {
 const handleConversion = (params: ConversionQueryData) => {
 	const customHeaders = headerService.getTrackGuestHeader();
 
-	if (!customHeaders) return;
+	if (!customHeaders || currencyStore.loading) return;
 
 	convertStore.fetchConversionWithHeaders(params, customHeaders);
 };
@@ -49,19 +50,18 @@ onMounted(fetchCurrencies);
 		v-if="currencyStore.currencyList"
 		class="bg-white rounded-lg shadow-md p-6 mx-auto max-w-screen-lg mt-4"
 	>
-		<div class="mb-5" v-if="convertStore.conversion">
-			<CurrencyChangeInfo :conversion="convertStore.conversion" />
+		<div :class="{ 'mb-5': convertStore.conversion || convertStore.loading }">
+			<CurrencyChangeInfo
+				:conversion="convertStore.conversion"
+				:loading="convertStore.loading"
+			/>
 		</div>
 		<CurrencyChangeForm
 			@onSubmit="handleConversion"
 			:currencyCountryPairs="currencyStore.currencyCountryPairs"
 		>
 			<div class="mt-5 md:mt-2 md:mb-2">
-				<button
-					type="submit"
-					class="bg-blue-500 text-white px-4 py-2 flex items-center justify-between space-x-2 rounded-md"
-				>
-					<span>Cambio</span>
+				<BtnLoading type="submit" text="Cambio" :loading="convertStore.loading">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"
@@ -72,7 +72,15 @@ onMounted(fetchCurrencies);
 						<circle cx="10" cy="10" r="9" stroke-width="2" />
 						<path stroke-width="2" d="M12 8l2 2-2 2M8 12l-2-2 2-2" />
 					</svg>
-				</button>
+				</BtnLoading>
+				<!-- <button
+					type="submit"
+					:disabled="convertStore.loading"
+					class="bg-blue-500 text-white px-4 py-2 flex items-center justify-between space-x-2 rounded-md"
+				>
+					<span>Cambio</span>
+					
+				</button> -->
 			</div>
 		</CurrencyChangeForm>
 	</div>
