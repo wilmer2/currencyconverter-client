@@ -6,7 +6,7 @@ import BtnReload from '@/components/BtnReload.vue';
 import Spinner from '@/components/Spinner.vue';
 import BtnLoading from '@/components/BtnLoading.vue';
 import ErrorMessageVue from '@/components/ErrorMessage.vue';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useCurrenyStore } from '@/stores/currency-store';
 import { useConvertStore } from '@/stores/convert-store';
 import { type ConversionQueryData } from '@/interfaces/conversion.interface';
@@ -21,7 +21,7 @@ const fetchCurrencies = (): void => {
 	}
 };
 
-const handleConversion = (params: ConversionQueryData) => {
+const handleConversion = (params: ConversionQueryData): void => {
 	const customHeaders = headerService.getTrackGuestHeader();
 
 	if (!customHeaders || currencyStore.loading) return;
@@ -30,6 +30,11 @@ const handleConversion = (params: ConversionQueryData) => {
 };
 
 onMounted(fetchCurrencies);
+
+onUnmounted(() => {
+	convertStore.$reset();
+	currencyStore.clearDecorativeState();
+});
 </script>
 
 <template>

@@ -42,5 +42,10 @@ export const useCurrenyStore = defineStore('currency', {
 		clearError() {
 			this.error = null;
 		},
+
+		clearDecorativeState() {
+			this.error = null;
+			this.loading = false;
+		},
 	},
 });
