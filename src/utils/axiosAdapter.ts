@@ -1,3 +1,4 @@
+import { mapErrors } from '@/services/errorService';
 import axios, { type AxiosResponse } from 'axios';
 
 const axiosObj = axios.create({
@@ -6,6 +7,17 @@ const axiosObj = axios.create({
 		'Content-Type': 'application/json',
 	},
 });
+
+axiosObj.interceptors.response.use(
+	(response) => {
+		return response;
+	},
+	(error) => {
+		const formattedError = mapErrors(error);
+
+		return Promise.reject(formattedError);
+	}
+);
 
 export const get = <T>(url: string, params = {}): Promise<AxiosResponse<T>> => {
 	return axiosObj.get<T>(url, { params });

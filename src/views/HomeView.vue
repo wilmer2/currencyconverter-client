@@ -35,7 +35,7 @@ onMounted(fetchCurrencies);
 <template>
 	<ErrorMessageVue
 		v-if="convertStore.error"
-		:message="convertStore.error"
+		:message="convertStore.error.message"
 		@onClose="convertStore.clearError"
 	/>
 
@@ -73,14 +73,6 @@ onMounted(fetchCurrencies);
 						<path stroke-width="2" d="M12 8l2 2-2 2M8 12l-2-2 2-2" />
 					</svg>
 				</BtnLoading>
-				<!-- <button
-					type="submit"
-					:disabled="convertStore.loading"
-					class="bg-blue-500 text-white px-4 py-2 flex items-center justify-between space-x-2 rounded-md"
-				>
-					<span>Cambio</span>
-					
-				</button> -->
 			</div>
 		</CurrencyChangeForm>
 	</div>

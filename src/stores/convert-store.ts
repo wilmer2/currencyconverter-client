@@ -5,13 +5,15 @@ import {
 	type Conversion,
 } from '@/interfaces/conversion.interface';
 import { type StringKeyObject } from '../interfaces/generics.interface';
+import { type ResponseError } from '../interfaces/generics.interface';
+import { isResponseError } from '../services/errorService';
 
 export const useConvertStore = defineStore('convert', {
 	state: () => {
 		return {
 			conversion: null as null | Conversion,
 			loading: false,
-			error: null as null | string,
+			error: null as null | ResponseError,
 		};
 	},
 	actions: {
@@ -24,8 +26,12 @@ export const useConvertStore = defineStore('convert', {
 
 			try {
 				this.conversion = await fetchConversionWithHeaders(params, headers);
-			} catch (e: any) {
-				this.error = e.response.data.detail;
+			} catch (e) {
+				if (isResponseError(e)) {
+					this.error = e;
+				}
+
+				throw e;
 			} finally {
 				this.loading = false;
 			}
