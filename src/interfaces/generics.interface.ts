@@ -16,3 +16,11 @@ export interface AsyncCallback<T> {
 }
 
 export type ButtonType = 'submit' | 'reset' | 'button' | undefined;
+export type InputType = 'text' | 'password' | 'number' | 'email' | 'date';
+
+export interface FieldData {
+	label: string;
+	placeholder?: string;
+	name: string;
+	type: InputType;
+}
