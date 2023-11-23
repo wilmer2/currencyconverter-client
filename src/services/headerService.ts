@@ -16,12 +16,12 @@ export const generateTrackGuestUserHeader = (): void => {
 	}
 };
 
-export const getTrackGuestHeader = (): null | StringKeyObject => {
+export const getTrackGuestHeader = (): undefined | StringKeyObject => {
 	const guestUserHeader = localStorageAdapter.getItem<StringKeyObject>(
 		HEADERS_KEYS.X_GUEST_ID
 	);
 
-	return guestUserHeader;
+	return guestUserHeader === null ? undefined : guestUserHeader;
 };
 
 export default {

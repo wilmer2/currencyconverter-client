@@ -1,72 +1,58 @@
 <script setup lang="ts">
+import BtnReload from '@/components/BtnReload.vue';
+import BtnLoading from '@/components/BtnLoading.vue';
 import CurrencyChangeForm from '@/components/CurrencyChangeForm.vue';
 import CurrencyChangeInfo from '@/components/CurrencyChangeInfo.vue';
-import BtnReload from '@/components/BtnReload.vue';
-
-import Spinner from '@/components/Spinner.vue';
-import BtnLoading from '@/components/BtnLoading.vue';
 import ErrorMessageVue from '@/components/ErrorMessage.vue';
-import { onMounted, onUnmounted } from 'vue';
-import { useCurrenyStore } from '@/stores/currency-store';
-import { useConvertStore } from '@/stores/convert-store';
-import { type ConversionQueryData } from '@/interfaces/conversion.interface';
-import headerService from '@/services/headerService';
+import Spinner from '@/components/Spinner.vue';
+import { onMounted } from 'vue';
+import { useCurrencyCountryPairs } from './composables/homeview/useCurrencyCountryPair';
+import { useConversion } from './composables/homeview/useConversion';
 
-const currencyStore = useCurrenyStore();
-const convertStore = useConvertStore();
+const {
+	fetchData: fetchCurrencies,
+	currencyCountryPairs,
+	loading,
+	error,
+} = useCurrencyCountryPairs();
 
-const fetchCurrencies = (): void => {
-	if (!currencyStore.currencyList) {
-		currencyStore.fetchCurrencies();
-	}
-};
-
-const handleConversion = (params: ConversionQueryData): void => {
-	const customHeaders = headerService.getTrackGuestHeader();
-
-	if (!customHeaders || currencyStore.loading) return;
-
-	convertStore.fetchConversionWithHeaders(params, customHeaders);
-};
+const {
+	fetchConversion,
+	clearError,
+	conversion,
+	loading: conversionLoading,
+	error: conversionError,
+} = useConversion();
 
 onMounted(fetchCurrencies);
-
-onUnmounted(() => {
-	convertStore.$reset();
-	currencyStore.clearDecorativeState();
-});
 </script>
 
 <template>
 	<ErrorMessageVue
-		v-if="convertStore.error"
-		:message="convertStore.error.message"
-		@onClose="convertStore.clearError"
+		v-if="conversionError"
+		:message="conversionError.message"
+		@onClose="clearError"
 	/>
 
-	<BtnReload
-		v-if="currencyStore.error"
-		@onReload="currencyStore.fetchCurrencies"
-	/>
-
-	<Spinner v-if="currencyStore.loading" />
+	<BtnReload v-if="error" @onReload="fetchCurrencies" />
+	<Spinner v-if="loading" />
 
 	<div
-		v-if="currencyStore.currencyList"
+		v-if="currencyCountryPairs.length"
 		class="bg-white rounded-lg shadow-md p-6 mx-auto max-w-screen-lg mt-4"
 	>
-		<div :class="{ 'mb-5': convertStore.conversion || convertStore.loading }">
+		<div :class="{ 'mb-5': conversion || conversionLoading }">
 			<CurrencyChangeInfo
-				:conversion="convertStore.conversion"
-				:loading="convertStore.loading"
+				:conversion="conversion"
+				:loading="conversionLoading"
 			/>
 		</div>
 		<CurrencyChangeForm
-			@onSubmit="handleConversion"
-			:currencyCountryPairs="currencyStore.currencyCountryPairs"
+			@onSubmit="fetchConversion"
+			:currencyCountryPairs="currencyCountryPairs"
 		>
 			<div class="mt-5 md:mt-2 md:mb-2">
-				<BtnLoading type="submit" text="Cambio" :loading="convertStore.loading">
+				<BtnLoading type="submit" text="Cambio" :loading="conversionLoading">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"

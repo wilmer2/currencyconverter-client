@@ -19,22 +19,14 @@ axiosObj.interceptors.response.use(
 	}
 );
 
-export const get = <T>(url: string, params = {}): Promise<AxiosResponse<T>> => {
-	return axiosObj.get<T>(url, { params });
-};
-
-export const getWithCustomHeaders = (
+export const get = <T>(
 	url: string,
 	params = {},
 	headers = {}
-) => {
-	return axiosObj.get(url, {
-		params,
-		headers,
-	});
+): Promise<AxiosResponse<T>> => {
+	return axiosObj.get<T>(url, { params, headers });
 };
 
 export default {
 	get,
-	getWithCustomHeaders,
 };

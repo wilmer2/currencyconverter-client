@@ -1,7 +1,9 @@
 import axiosAdapter from '../utils/axiosAdapter';
 import { type Currency } from '../interfaces/currency.interface';
-import { type ConversionQueryData } from '@/interfaces/conversion.interface';
-
+import {
+	type Conversion,
+	type ConversionQueryData,
+} from '@/interfaces/conversion.interface';
 import { type StringKeyObject } from '../interfaces/generics.interface';
 
 export const fetchCurrencies = async (): Promise<Currency> => {
@@ -10,17 +12,11 @@ export const fetchCurrencies = async (): Promise<Currency> => {
 	return response.data;
 };
 
-export const fetchCurrencyConversion = async (params: ConversionQueryData) => {
-	const response = await axiosAdapter.get('currencies/convert', params);
-
-	return response.data;
-};
-
-export const fetchConversionWithHeaders = async (
+export const fetchCurrencyConversion = async (
 	params: ConversionQueryData,
-	headers: StringKeyObject
-) => {
-	const response = await axiosAdapter.getWithCustomHeaders(
+	headers: StringKeyObject = {}
+): Promise<Conversion> => {
+	const response = await axiosAdapter.get<Conversion>(
 		'currencies/convert',
 		params,
 		headers

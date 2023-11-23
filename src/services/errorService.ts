@@ -7,7 +7,7 @@ import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum.';
 import { CUSTOM_MESSAGE } from '@/utils/customMessage.enum';
 import {
 	type GenericDataError,
-	type ResponseError,
+	type ErrorResponse,
 } from '@/interfaces/generics.interface';
 
 const getStatusCode = (axiosError: AxiosError): number => {
@@ -31,7 +31,7 @@ const getMessage = (statusCode: number, axiosError: AxiosError): string => {
 	return errorMessage;
 };
 
-export const mapErrors = (axiosError: AxiosError): ResponseError => {
+export const mapErrors = (axiosError: AxiosError): ErrorResponse => {
 	const status = getStatusCode(axiosError);
 	const message = getMessage(status, axiosError);
 
@@ -41,10 +41,10 @@ export const mapErrors = (axiosError: AxiosError): ResponseError => {
 	};
 };
 
-export const isResponseError = (e: any): e is ResponseError => {
+export const isErrorResponse = (e: any): e is ErrorResponse => {
 	if (Array.isArray(e) || !isObject(e)) return false;
 
-	const { message = null, status = null } = e as ResponseError;
+	const { message = null, status = null } = e as ErrorResponse;
 
 	return isNumber(status) && isString(message);
 };
