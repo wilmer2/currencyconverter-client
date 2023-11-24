@@ -7,12 +7,16 @@ const showMenu: Ref<boolean> = ref<boolean>(false);
 const userStore = useUserStore();
 
 const handleShowMenu = (): void => {
-	showMenu.value = !showMenu.value;
+	showMenu.value = true;
+};
+
+const handleHideMenu = () => {
+	showMenu.value = false;
 };
 </script>
 
 <template>
-	<div class="relative">
+	<div class="relative" @focusout="handleHideMenu" tabindex="0">
 		<button
 			id="dropdownDefaultButton"
 			data-dropdown-toggle="dropdown"
