@@ -8,7 +8,7 @@ export const useUserStore = defineStore('user', {
 		};
 	},
 	actions: {
-		setUser(userData: User): void {
+		setUser(userData: User | null): void {
 			this.user = userData;
 		},
 	},

@@ -2,7 +2,9 @@ import { mapErrors } from '@/services/errorService';
 import axios, { type AxiosResponse } from 'axios';
 import type { LoginTokenResponse } from '@/interfaces/user.interface';
 import { HEADERS_KEYS } from './headers.enum';
-import { getItem } from './localStorageAdapter';
+import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum.';
+import { useUserStore } from '@/stores/useUserStore';
+import { getItem, removeItem } from './localStorageAdapter';
 
 const axiosObj = axios.create({
 	baseURL: import.meta.env.VITE_APP_BASE_API_URL,
@@ -31,8 +33,15 @@ axiosObj.interceptors.response.use(
 		return response;
 	},
 	(error) => {
-		console.log('*** error ***', error);
 		const formattedError = mapErrors(error);
+		const tokenData = getItem<LoginTokenResponse>(HEADERS_KEYS.TOKEN_ID);
+
+		if (tokenData && formattedError.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
+			const userStore = useUserStore();
+
+			userStore.setUser(null);
+			removeItem(HEADERS_KEYS.TOKEN_ID);
+		}
 
 		return Promise.reject(formattedError);
 	}
