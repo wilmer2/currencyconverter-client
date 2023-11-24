@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import { useUserStore } from '@/stores/useUserStore';
+
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -14,7 +17,7 @@ import { RouterLink } from 'vue-router';
 					/>
 				</RouterLink>
 			</div>
-			<div>
+			<div v-if="!userStore.user">
 				<a
 					href="#"
 					class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-md mr-2"
@@ -29,6 +32,7 @@ import { RouterLink } from 'vue-router';
 					Registrarse
 				</RouterLink>
 			</div>
+			<div v-else>User Logged</div>
 		</div>
 	</header>
 </template>

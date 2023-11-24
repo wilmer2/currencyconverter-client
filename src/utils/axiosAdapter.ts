@@ -1,5 +1,8 @@
 import { mapErrors } from '@/services/errorService';
 import axios, { type AxiosResponse } from 'axios';
+import type { LoginTokenResponse } from '@/interfaces/user.interface';
+import { HEADERS_KEYS } from './headers.enum';
+import { getItem } from './localStorageAdapter';
 
 const axiosObj = axios.create({
 	baseURL: import.meta.env.VITE_APP_BASE_API_URL,
@@ -7,6 +10,21 @@ const axiosObj = axios.create({
 		'Content-Type': 'application/json',
 	},
 });
+
+axiosObj.interceptors.request.use(
+	(config) => {
+		const tokenData = getItem<LoginTokenResponse>(HEADERS_KEYS.TOKEN_ID);
+
+		if (tokenData) {
+			config.headers['Authorization'] = `Bearer ${tokenData.token}`;
+		}
+
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
 
 axiosObj.interceptors.response.use(
 	(response) => {

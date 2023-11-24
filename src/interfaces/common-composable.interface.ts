@@ -7,3 +7,10 @@ export interface FetchComposableData<T, R> {
 	data: Ref<UnwrapRef<T> | null>;
 	fetchData: (params?: R, headers?: StringKeyObject) => Promise<void>;
 }
+
+export interface PostComposableData<T, R> {
+	loading: Ref<boolean>;
+	error: Ref<ErrorResponse | null>;
+	data: Ref<UnwrapRef<T> | null>;
+	saveData: (body?: R) => Promise<void>;
+}
