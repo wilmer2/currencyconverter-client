@@ -5,10 +5,14 @@ import ErrorMessage from '@/components/ErrorMessage.vue';
 import Form from '@/components/Form.vue';
 import { createUser } from '@/services/userService';
 import { usePostClearError } from '@/composables/usePostClearError';
+import type { UserRequestBody } from '@/interfaces/request-body.interface';
 
-const { data, loading, error, saveData, clearError } = usePostClearError<{
-	message: string;
-}>(createUser);
+const { loading, error, saveData, clearError } = usePostClearError<
+	{
+		message: string;
+	},
+	UserRequestBody
+>(createUser);
 
 const fields: FieldData[] = [
 	{

@@ -1,7 +1,8 @@
 import axiosAdapter from '@/utils/axiosAdapter';
+import type { UserRequestBody } from '@/interfaces/request-body.interface';
 
-export const createUser = async (data: any) => {
-	const response = await axiosAdapter.post('register', data);
+export const createUser = async (body?: UserRequestBody) => {
+	const response = await axiosAdapter.post('register', body);
 
 	return response.data;
 };

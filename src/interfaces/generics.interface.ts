@@ -17,8 +17,8 @@ export interface AsyncCallback<T> {
 	(params?: any, headers?: StringKeyObject): Promise<T>;
 }
 
-export interface PostAsyncCallback<T> {
-	(body?: any): Promise<T>;
+export interface PostAsyncCallback<T, R> {
+	(body?: R): Promise<T>;
 }
 
 export type ButtonType = 'submit' | 'reset' | 'button' | undefined;

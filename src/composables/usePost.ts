@@ -6,14 +6,14 @@ import type {
 } from '@/interfaces/generics.interface';
 import { isErrorResponse } from '@/services/errorService';
 
-export const usePost = <T>(
-	saveAsyncCallback: PostAsyncCallback<UnwrapRef<T>>
+export const usePost = <T, R>(
+	saveAsyncCallback: PostAsyncCallback<UnwrapRef<T>, R>
 ) => {
 	const data: Ref<UnwrapRef<T> | null> = ref<T | null>(null);
 	const error: Ref<ErrorResponse | null> = ref<ErrorResponse | null>(null);
 	const loading: Ref<boolean> = ref<boolean>(false);
 
-	const saveData = async (payload: any): Promise<void> => {
+	const saveData = async (payload: R): Promise<void> => {
 		data.value = null;
 		error.value = null;
 		loading.value = true;
