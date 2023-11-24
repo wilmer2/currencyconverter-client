@@ -27,8 +27,11 @@ export const get = <T>(
 	return axiosObj.get<T>(url, { params, headers });
 };
 
-export const post = async (url: string, body: any): Promise<any> => {
-	return axiosObj.post(url, body);
+export const post = async <T, R>(
+	url: string,
+	body?: R
+): Promise<AxiosResponse<T>> => {
+	return axiosObj.post<T>(url, body);
 };
 
 export default {
