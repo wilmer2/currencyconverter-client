@@ -6,14 +6,14 @@ import {
 import { type FetchComposableData } from '@/interfaces/common-composable.interface';
 import { isErrorResponse } from '@/services/errorService';
 
-export const useFetch = <T>(
-	asyncCallback: AsyncCallback<UnwrapRef<T>>
-): FetchComposableData<T> => {
+export const useFetch = <T, R = any>(
+	asyncCallback: AsyncCallback<UnwrapRef<T>, R>
+): FetchComposableData<T, R> => {
 	const data: Ref<UnwrapRef<T> | null> = ref<T | null>(null);
 	const error: Ref<ErrorResponse | null> = ref<ErrorResponse | null>(null);
 	const loading: Ref<boolean> = ref<boolean>(false);
 
-	const fetchData = async (params = {}, headers = {}): Promise<void> => {
+	const fetchData = async (params?: R, headers = {}): Promise<void> => {
 		loading.value = true;
 		error.value = null;
 

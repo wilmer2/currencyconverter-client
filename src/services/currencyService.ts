@@ -13,7 +13,7 @@ export const fetchCurrencies = async (): Promise<Currency> => {
 };
 
 export const fetchCurrencyConversion = async (
-	params: ConversionQueryData,
+	params?: ConversionQueryData,
 	headers: StringKeyObject = {}
 ): Promise<Conversion> => {
 	const response = await axiosAdapter.get<Conversion>(

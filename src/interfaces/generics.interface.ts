@@ -13,8 +13,8 @@ export interface ErrorResponse {
 	fieldErrors: null | { [key: string]: string[] };
 }
 
-export interface AsyncCallback<T> {
-	(params?: any, headers?: StringKeyObject): Promise<T>;
+export interface AsyncCallback<T, R> {
+	(params?: R, headers?: StringKeyObject): Promise<T>;
 }
 
 export interface PostAsyncCallback<T, R> {

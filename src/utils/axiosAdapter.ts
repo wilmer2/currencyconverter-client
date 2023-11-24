@@ -21,8 +21,8 @@ axiosObj.interceptors.response.use(
 
 export const get = <T>(
 	url: string,
-	params = {},
-	headers = {}
+	params?: any,
+	headers?: any
 ): Promise<AxiosResponse<T>> => {
 	return axiosObj.get<T>(url, { params, headers });
 };

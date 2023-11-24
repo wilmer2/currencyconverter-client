@@ -12,7 +12,7 @@ export const useConversion = () => {
 		data: conversion,
 		loading,
 		error,
-	} = useFetch<Conversion>(fetchCurrencyConversion);
+	} = useFetch<Conversion, ConversionQueryData>(fetchCurrencyConversion);
 
 	const fetchConversion = (params: ConversionQueryData): void => {
 		if (loading.value) return;
