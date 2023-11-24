@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import HeaderDropdown from './HeaderDropdown.vue';
 import { useUserStore } from '@/stores/useUserStore';
 
 const userStore = useUserStore();
@@ -32,7 +33,7 @@ const userStore = useUserStore();
 					Registrarse
 				</RouterLink>
 			</div>
-			<div v-else>User Logged</div>
+			<HeaderDropdown v-else />
 		</div>
 	</header>
 </template>
