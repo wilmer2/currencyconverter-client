@@ -23,6 +23,8 @@ watch(
 	() => {
 		if (props.fieldErrors && props.fieldErrors[props.name]) {
 			errors.value = props.fieldErrors[props.name];
+		} else {
+			errors.value = [];
 		}
 	}
 );
@@ -44,6 +46,7 @@ const handleInput = () => {
 		:placeholder="props.placeholder"
 		@input="handleInput"
 		v-model="inputValue"
+		required
 	/>
 	<p class="text-red-500 text-xs italic" v-for="error in errors" :key="error">
 		{{ error }}
