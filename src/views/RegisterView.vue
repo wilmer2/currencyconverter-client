@@ -6,8 +6,9 @@ import Form from '@/components/Form.vue';
 import { createUser } from '@/services/userService';
 import { usePostClearError } from '@/composables/usePostClearError';
 
-const { data, loading, error, saveData, clearError } =
-	usePostClearError(createUser);
+const { data, loading, error, saveData, clearError } = usePostClearError<{
+	message: string;
+}>(createUser);
 
 const fields: FieldData[] = [
 	{

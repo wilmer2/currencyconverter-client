@@ -17,6 +17,10 @@ export interface AsyncCallback<T> {
 	(params?: any, headers?: StringKeyObject): Promise<T>;
 }
 
+export interface PostAsyncCallback<T> {
+	(body?: any): Promise<T>;
+}
+
 export type ButtonType = 'submit' | 'reset' | 'button' | undefined;
 export type InputType = 'text' | 'password' | 'number' | 'email' | 'date';
 

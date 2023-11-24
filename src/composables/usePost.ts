@@ -1,14 +1,19 @@
 import { ref } from 'vue';
-import type { Ref } from 'vue';
-import type { ErrorResponse } from '@/interfaces/generics.interface';
+import type { Ref, UnwrapRef } from 'vue';
+import type {
+	ErrorResponse,
+	PostAsyncCallback,
+} from '@/interfaces/generics.interface';
 import { isErrorResponse } from '@/services/errorService';
 
-export const usePost = (saveAsyncCallback: any) => {
-	const data = ref(null);
+export const usePost = <T>(
+	saveAsyncCallback: PostAsyncCallback<UnwrapRef<T>>
+) => {
+	const data: Ref<UnwrapRef<T> | null> = ref<T | null>(null);
 	const error: Ref<ErrorResponse | null> = ref<ErrorResponse | null>(null);
-	const loading = ref(false);
+	const loading: Ref<boolean> = ref<boolean>(false);
 
-	const saveData = async (payload: any) => {
+	const saveData = async (payload: any): Promise<void> => {
 		data.value = null;
 		error.value = null;
 		loading.value = true;
