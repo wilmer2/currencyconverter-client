@@ -5,6 +5,7 @@ import Input from './Input.vue';
 
 const props = defineProps<{
 	fields: FieldData[];
+	fieldErrors?: { [key: string]: string[] } | null;
 }>();
 
 const emit = defineEmits<{
@@ -39,6 +40,7 @@ const handleSubmit = (): void => {
 				:name="field.name"
 				:placeholder="field.placeholder"
 				:type="field.type"
+				:fieldErrors="props.fieldErrors"
 				@onChangeInputValue="handleChangeValue"
 			/>
 		</div>

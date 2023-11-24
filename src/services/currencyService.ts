@@ -1,4 +1,4 @@
-import axiosAdapter from '../utils/axiosAdapter';
+import axiosAdapter from '@/utils/axiosAdapter';
 import { type Currency } from '../interfaces/currency.interface';
 import {
 	type Conversion,

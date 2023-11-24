@@ -22,22 +22,34 @@ const getMessage = (statusCode: number, axiosError: AxiosError): string => {
 
 	if (statusCode >= HTTP_STATUS_CODE.ERROR_INTERNAL) {
 		errorMessage = CUSTOM_MESSAGE.ERROR_INTERNAL_MESSAGE;
-	} else if (data?.detail) {
-		errorMessage = data.detail;
-	} else if (axiosError?.message) {
-		errorMessage = axiosError.message;
+	} else if (statusCode === HTTP_STATUS_CODE.NOT_FOUND) {
+		errorMessage = CUSTOM_MESSAGE.NOT_FOUND;
+	} else {
+		errorMessage = data?.detail || axiosError?.message || '';
 	}
 
 	return errorMessage;
 };
 
+const getErrors = (
+	axiosError: AxiosError
+): { [key: string]: string[] } | null => {
+	const data = axiosError?.response?.data as GenericDataError;
+
+	if (!data?.errors) return null;
+
+	return data.errors;
+};
+
 export const mapErrors = (axiosError: AxiosError): ErrorResponse => {
 	const status = getStatusCode(axiosError);
 	const message = getMessage(status, axiosError);
+	const fieldErrors = getErrors(axiosError);
 
 	return {
 		status,
 		message,
+		fieldErrors,
 	};
 };
 

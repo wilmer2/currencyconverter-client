@@ -4,11 +4,13 @@ export interface StringKeyObject {
 
 export interface GenericDataError {
 	detail?: string;
+	errors?: { [key: string]: string[] };
 }
 
 export interface ErrorResponse {
 	status: number;
 	message: string;
+	fieldErrors: null | { [key: string]: string[] };
 }
 
 export interface AsyncCallback<T> {
