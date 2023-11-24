@@ -3,6 +3,8 @@ export interface StringKeyObject {
 }
 
 export interface GenericDataError {
+	code?: number;
+	message?: string;
 	detail?: string;
 	errors?: { [key: string]: string[] };
 }

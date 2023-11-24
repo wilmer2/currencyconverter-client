@@ -18,12 +18,12 @@ const userStore = useUserStore();
 				</RouterLink>
 			</div>
 			<div v-if="!userStore.user">
-				<a
-					href="#"
+				<RouterLink
+					to="login"
 					class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-md mr-2"
 				>
 					Iniciar sesión
-				</a>
+				</RouterLink>
 
 				<RouterLink
 					to="register"

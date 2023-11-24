@@ -6,7 +6,6 @@ import type {
 } from '@/interfaces/user.interface';
 import type { UserRequestBody } from '@/interfaces/request-body.interface';
 import { HEADERS_KEYS } from '@/utils/headers.enum';
-
 import { login } from '@/services/userService';
 import { setItem } from '@/utils/localStorageAdapter';
 import { usePost } from '@/composables/usePost';

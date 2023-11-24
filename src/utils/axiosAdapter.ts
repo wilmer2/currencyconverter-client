@@ -31,6 +31,7 @@ axiosObj.interceptors.response.use(
 		return response;
 	},
 	(error) => {
+		console.log('*** error ***', error);
 		const formattedError = mapErrors(error);
 
 		return Promise.reject(formattedError);

@@ -8,6 +8,7 @@ import { CUSTOM_MESSAGE } from '@/utils/customMessage.enum';
 import {
 	type GenericDataError,
 	type ErrorResponse,
+	type StringKeyObject,
 } from '@/interfaces/generics.interface';
 
 const getStatusCode = (axiosError: AxiosError): number => {
@@ -20,10 +21,19 @@ const getMessage = (statusCode: number, axiosError: AxiosError): string => {
 	const data = axiosError?.response?.data as GenericDataError;
 	let errorMessage = '';
 
-	if (statusCode >= HTTP_STATUS_CODE.ERROR_INTERNAL) {
-		errorMessage = CUSTOM_MESSAGE.ERROR_INTERNAL_MESSAGE;
-	} else if (statusCode === HTTP_STATUS_CODE.NOT_FOUND) {
-		errorMessage = CUSTOM_MESSAGE.NOT_FOUND;
+	const errorMessages: StringKeyObject = {
+		[HTTP_STATUS_CODE.ERROR_INTERNAL]: CUSTOM_MESSAGE.ERROR_INTERNAL_MESSAGE,
+		[HTTP_STATUS_CODE.NOT_FOUND]: CUSTOM_MESSAGE.NOT_FOUND,
+	};
+
+	if (errorMessages[statusCode]) {
+		errorMessage = errorMessages[statusCode];
+	} else if (
+		data &&
+		data.code === HTTP_STATUS_CODE.UNAUTHORIZED &&
+		data.message
+	) {
+		errorMessage = data.message;
 	} else {
 		errorMessage = data?.detail || axiosError?.message || '';
 	}
