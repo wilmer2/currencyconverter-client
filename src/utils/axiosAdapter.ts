@@ -2,7 +2,7 @@ import { mapErrors } from '@/services/errorService';
 import axios, { type AxiosResponse } from 'axios';
 import type { LoginTokenResponse } from '@/interfaces/user.interface';
 import { HEADERS_KEYS } from './headers.enum';
-import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum.';
+import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { getItem, removeItem } from './localStorageAdapter';
 

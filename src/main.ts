@@ -7,8 +7,10 @@ import withUUID from 'vue-uuid';
 import App from './App.vue';
 import router from './router';
 import './index.css';
+import clickOutside from './directives/clickOutside';
 
 const app = withUUID(createApp(App));
+app.directive('click-outside', clickOutside);
 
 app.use(createPinia());
 app.use(router);

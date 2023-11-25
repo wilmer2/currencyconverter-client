@@ -3,7 +3,7 @@ import isObject from 'lodash.isobject';
 import isString from 'lodash.isstring';
 import isNumber from 'lodash.isnumber';
 
-import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum.';
+import { HTTP_STATUS_CODE } from '@/utils/statusCode.enum';
 import { CUSTOM_MESSAGE } from '@/utils/customMessage.enum';
 import {
 	type GenericDataError,

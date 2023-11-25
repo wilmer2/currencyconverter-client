@@ -3,6 +3,10 @@ import type { Ref } from 'vue';
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/useUserStore';
 
+const emit = defineEmits<{
+	(e: 'onLogout'): void;
+}>();
+
 const showMenu: Ref<boolean> = ref<boolean>(false);
 const userStore = useUserStore();
 
@@ -16,7 +20,7 @@ const handleHideMenu = () => {
 </script>
 
 <template>
-	<div class="relative" @focusout="handleHideMenu" tabindex="0">
+	<div class="relative" v-click-outside="handleHideMenu" tabindex="0">
 		<button
 			id="dropdownDefaultButton"
 			data-dropdown-toggle="dropdown"
@@ -42,7 +46,6 @@ const handleHideMenu = () => {
 			</svg>
 		</button>
 
-		<!-- Dropdown menu -->
 		<div
 			id="dropdown"
 			class="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
@@ -56,11 +59,11 @@ const handleHideMenu = () => {
 					<a
 						href="#"
 						class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+						@click="$emit('onLogout')"
 						>Cerrar sesión</a
 					>
 				</li>
 			</ul>
 		</div>
 	</div>
-	<template></template>
 </template>

@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import HeaderDropdown from './HeaderDropdown.vue';
+import { HEADERS_KEYS } from '@/utils/headers.enum';
 import { useUserStore } from '@/stores/useUserStore';
+import { useRouter } from 'vue-router';
 
+import { removeItem } from '@/utils/localStorageAdapter';
+
+const router = useRouter();
 const userStore = useUserStore();
+
+const handleLogout = (): void => {
+	userStore.setUser(null);
+	removeItem(HEADERS_KEYS.TOKEN_ID);
+	router.push('/');
+};
 </script>
 
 <template>
@@ -33,7 +44,7 @@ const userStore = useUserStore();
 					Registrarse
 				</RouterLink>
 			</div>
-			<HeaderDropdown v-else />
+			<HeaderDropdown v-else @onLogout="handleLogout" />
 		</div>
 	</header>
 </template>
