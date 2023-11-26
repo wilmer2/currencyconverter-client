@@ -98,6 +98,7 @@ const fields: FieldData[] = [
 				@onSubmitData="handleUserSave"
 				:fields="fields"
 				:fieldErrors="error && error.fieldErrors"
+				:isDisabled="loading"
 			>
 				<div class="flex items-center justify-center">
 					<BtnLoading type="submit" text="Registrarse" :loading="loading" />

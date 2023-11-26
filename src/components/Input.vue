@@ -9,6 +9,7 @@ const props = defineProps<{
 	name: string;
 	type: InputType;
 	fieldErrors?: { [key: string]: string[] } | null;
+	disabled?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -44,6 +45,7 @@ const handleInput = () => {
 		:id="props.name"
 		:type="props.type"
 		:placeholder="props.placeholder"
+		:disabled="props.disabled"
 		@input="handleInput"
 		v-model="inputValue"
 		required

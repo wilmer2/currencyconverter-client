@@ -85,7 +85,7 @@ const fields: FieldData[] = [
 		</h1>
 		<hr />
 		<div class="pt-5 px-8 pb-8 mb-4">
-			<Form @onSubmitData="loginCheck" :fields="fields">
+			<Form @onSubmitData="loginCheck" :fields="fields" :isDisabled="loading">
 				<div class="flex items-center justify-center">
 					<BtnLoading type="submit" text="Iniciar sesión" :loading="loading" />
 				</div>
