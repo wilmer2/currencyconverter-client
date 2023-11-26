@@ -5,13 +5,11 @@ import type {
 	LoginTokenResponse,
 	UserResponse,
 } from '../interfaces/user.interface';
-import { HEADERS_KEYS } from '../utils/headers.enum';
-import { HTTP_STATUS_CODE } from '../utils/statusCode.enum';
-
-import { getUser } from '../services/userService';
-import { getItem } from '../utils/localStorageAdapter';
-import { useFetch } from '../composables/useFetch';
 import type { ErrorResponse } from '@/interfaces/generics.interface';
+import { HTTP_STATUS_CODE } from '../utils/statusCode.enum';
+import { getUser } from '../services/userService';
+import { useFetch } from '../composables/useFetch';
+import { getToken } from '@/services/headerService';
 
 export const useConfigInitialData = () => {
 	const {
@@ -25,7 +23,7 @@ export const useConfigInitialData = () => {
 		null
 	);
 
-	const tokenData = getItem<LoginTokenResponse>(HEADERS_KEYS.TOKEN_ID);
+	const tokenData: LoginTokenResponse | null = getToken();
 
 	onBeforeMount(() => {
 		if (tokenData) {

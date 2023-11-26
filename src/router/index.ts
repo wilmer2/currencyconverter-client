@@ -15,14 +15,14 @@ export const router = createRouter({
 		{
 			path: '/register',
 			name: 'register',
-			meta: { guest: true },
 			component: RegisterView,
+			meta: { guest: true },
 		},
 		{
 			path: '/login',
 			name: 'login',
-			meta: { guest: true },
 			component: LoginView,
+			meta: { guest: true },
 		},
 	],
 });
