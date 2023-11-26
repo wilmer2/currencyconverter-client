@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
+import { getToken } from '@/services/headerService';
 
-const router = createRouter({
+export const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
@@ -14,14 +15,22 @@ const router = createRouter({
 		{
 			path: '/register',
 			name: 'register',
+			meta: { guest: true },
 			component: RegisterView,
 		},
 		{
 			path: '/login',
 			name: 'login',
+			meta: { guest: true },
 			component: LoginView,
 		},
 	],
 });
 
-export default router;
+router.beforeResolve(async (to) => {
+	const token = getToken();
+
+	if (to.meta?.guest && token) {
+		return { name: 'home' };
+	}
+});

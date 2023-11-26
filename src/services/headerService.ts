@@ -2,6 +2,7 @@ import { uuid } from 'vue-uuid';
 import { HEADERS_KEYS } from '../utils/headers.enum';
 import localStorageAdapter from '../utils/localStorageAdapter';
 import { type StringKeyObject } from '../interfaces/generics.interface';
+import type { LoginTokenResponse } from '@/interfaces/user.interface';
 
 export const generateTrackGuestUserHeader = (): void => {
 	const guestUserHeader = localStorageAdapter.getItem(HEADERS_KEYS.X_GUEST_ID);
@@ -24,7 +25,16 @@ export const getTrackGuestHeader = (): undefined | StringKeyObject => {
 	return guestUserHeader === null ? undefined : guestUserHeader;
 };
 
+export const getToken = (): null | LoginTokenResponse => {
+	const tokenData = localStorageAdapter.getItem<LoginTokenResponse>(
+		HEADERS_KEYS.TOKEN_ID
+	);
+
+	return tokenData;
+};
+
 export default {
 	generateTrackGuestUserHeader,
 	getTrackGuestHeader,
+	getToken,
 };
