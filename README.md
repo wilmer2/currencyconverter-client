@@ -1,7 +1,7 @@
 # Prerrequisitos
 
 1. Tener descargardo proyecto https://github.com/wilmer2/currencyconverter_api con sus dependencias
-2. Tenerlo ejecutado con `` symfony serve`
+2. Tenerlo ejecutado con `symfony serve`
 
 # Ejecutar proyecto en dev
 
