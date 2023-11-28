@@ -5,6 +5,10 @@
 
 # Ejecutar proyecto en dev
 
+1. Clonar repositorio
+2. Clonar archivo `.env.example` a `.env`
+3. Ejecutar
+
 ```
 npm run dev
 ```
