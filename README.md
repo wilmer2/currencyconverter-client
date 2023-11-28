@@ -7,7 +7,11 @@
 
 1. Clonar repositorio
 2. Clonar archivo `.env.example` a `.env`
-3. Ejecutar
+3. Instalar dependencias
+```
+npm install
+```
+4. Levantar proyecto
 
 ```
 npm run dev
