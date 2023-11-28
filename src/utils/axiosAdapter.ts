@@ -7,7 +7,8 @@ import { useUserStore } from '@/stores/useUserStore';
 import { getItem, removeItem } from './localStorageAdapter';
 
 const axiosObj = axios.create({
-	baseURL: import.meta.env.VITE_APP_BASE_API_URL,
+	baseURL:
+		import.meta.env.VITE_APP_BASE_API_URL || 'http://localhost:8000/api/',
 	headers: {
 		'Content-Type': 'application/json',
 		'Accept-Language': navigator.language,
