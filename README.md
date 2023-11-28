@@ -7,10 +7,13 @@
 
 1. Clonar repositorio
 2. Clonar archivo `.env.example` a `.env`
-3. Instalar dependencias
+3. Ingresar a carpeta del proyect cd `./currencyconverter_frontend`
+4. Instalar dependencias
+
 ```
 npm install
 ```
+
 4. Levantar proyecto
 
 ```
